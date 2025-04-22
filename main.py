@@ -1,9 +1,23 @@
-print("Welcome to Home Security System")
-pin = "1234"
+#include <DHT.h>
+#define DHTPIN 4     // DHT11 sensor connected to GPIO 4
+#define DHTTYPE DHT11
 
-entered_pin = input("Enter PIN: ")
+DHT dht(DHTPIN, DHTTYPE);
 
-if entered_pin == pin:
-    print("Door unlocked")
-else:
-    print("Intruder alert! Taking photo...")
+void setup() {
+  Serial.begin(9600);
+  dht.begin();
+}
+
+void loop() {
+  float temperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
+
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.print("°C\tHumidity: ");
+  Serial.print(humidity);
+  Serial.println("%");
+
+  delay(2000);
+}
