@@ -25,7 +25,8 @@ This project focuses on building an air quality monitoring system tailored for h
 Hospitals need good air quality to protect vulnerable patients. This project addresses that by creating an affordable, responsive, and simple system to detect air quality issues.
 
 ## 📷 System Diagram
-![System Diagram](images/system-diagram.png)
+<img width="960" alt="image" src="https://github.com/user-attachments/assets/de8ff4cf-5745-4831-95fd-c035766514fe" />
+
 
 ## 🗂️ Folder Structure
 | Folder | Description |
