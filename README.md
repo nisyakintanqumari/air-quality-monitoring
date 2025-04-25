@@ -59,7 +59,8 @@ Hospitals need good air quality to protect vulnerable patients. This project add
 
 Hi! I’m **Nisya Kintan Qumari**, a Master’s graduate in Electrical Engineering from NTUST, Taiwan. I'm passionate about intelligent systems, IoT, and AI in real-world applications.
 
-📫 [LinkedIn]([(https://www.linkedin.com/in/nisya-kintan-qumari-%E5%80%AA%E8%89%BE%E8%8E%8E-52b202215/)])
+📫 [LinkedIn]
+(https://www.linkedin.com/in/nisya-kintan-qumari-%E5%80%AA%E8%89%BE%E8%8E%8E-52b202215/)
 📧 nisyakintanqumari@gmail.com
 
 ## 📜 License
