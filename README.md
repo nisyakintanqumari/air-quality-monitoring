@@ -1,6 +1,8 @@
 # air-quality-monitoring
 A final project designed to monitor indoor air quality in hospitals using IoT sensors and real-time data processing. IoT-based Real-Time Air Quality Monitoring System for Hospital Environments using ESP32 and sensors.
 
+**website** :https://smartairqualitymon.wixsite.com/smartmonitor
+
 # 🌬️ Air Quality Monitoring System
 This project focuses on building an air quality monitoring system tailored for hospital environments. By integrating sensors with a microcontroller, the system detects harmful gases and displays the results on an LCD. The goal is to ensure a healthier and safer environment for patients, visitors, and medical staff. This project is an IoT-based air quality monitoring system designed for indoor environments, especially healthcare facilities like hospitals. It measures environmental parameters in real-time to ensure healthy indoor air.
 
