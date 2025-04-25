@@ -61,6 +61,7 @@ Hi! I’m **Nisya Kintan Qumari**, a Master’s graduate in Electrical Engineeri
 
 📫 [LinkedIn]
 (https://www.linkedin.com/in/nisya-kintan-qumari-%E5%80%AA%E8%89%BE%E8%8E%8E-52b202215/)
+
 📧 nisyakintanqumari@gmail.com
 
 ## 📜 License
