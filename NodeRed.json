@@ -1,0 +1,1422 @@
+[
+    {
+        "id": "bacebb494bd7195b",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a3dd0a04cb711b26",
+        "type": "mqtt-broker",
+        "name": "local",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "94652f2080bbd391",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "esp",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "cf9cd3973e9b8a31",
+        "type": "mqtt-broker",
+        "name": "ngrok",
+        "broker": "0.tcp.jp.ngrok.io",
+        "port": "16848",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "7dfd3904234c9051",
+        "type": "MySQLdatabase",
+        "name": "ESP AWS",
+        "host": "54.236.7.25",
+        "port": "3306",
+        "db": "esp",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "6483200c1d4994b2",
+        "type": "telegram bot",
+        "botname": "Bobo",
+        "usernames": "",
+        "chatids": "1032467220",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "300",
+        "usesocks": false,
+        "sockshost": "",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "7ba549375480c825",
+        "type": "mqtt in",
+        "z": "bacebb494bd7195b",
+        "name": "temp",
+        "topic": "temp",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "a3dd0a04cb711b26",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 120,
+        "wires": [
+            [
+                "b44fbe91178fea35",
+                "8e7d008399ccfbf3"
+            ]
+        ]
+    },
+    {
+        "id": "0eafbd8d010bdf35",
+        "type": "mqtt in",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "topic": "humid",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "a3dd0a04cb711b26",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 200,
+        "wires": [
+            [
+                "b44fbe91178fea35",
+                "ad97eb5c3c5ebe0e"
+            ]
+        ]
+    },
+    {
+        "id": "b44fbe91178fea35",
+        "type": "join",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "11",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 430,
+        "y": 1060,
+        "wires": [
+            [
+                "1aa75435c41e8a87"
+            ]
+        ]
+    },
+    {
+        "id": "1aa75435c41e8a87",
+        "type": "function",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "func": "msg.topic = \"INSERT INTO dht (temp,humid,pm1,pm10,pm2_5,acetone,alcohol,co,co2,nh4,toluene) VALUES (\"+msg.payload.temp+\",\"+msg.payload.humid+\",\"+msg.payload.pm1+\",\"+msg.payload.pm10+\",\"+msg.payload.pm2_5+\",\"+msg.payload.acetone+\",\"+msg.payload.alcohol+\",\"+msg.payload.co+\",\"+msg.payload.co2+\",\"+msg.payload.nh4+\",\"+msg.payload.toluene+\");\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 1060,
+        "wires": [
+            [
+                "50416e1351eb4f70",
+                "469354ec3c676fc3"
+            ]
+        ]
+    },
+    {
+        "id": "50416e1351eb4f70",
+        "type": "mysql",
+        "z": "bacebb494bd7195b",
+        "mydb": "94652f2080bbd391",
+        "name": "",
+        "x": 810,
+        "y": 1060,
+        "wires": [
+            [
+                "39caa4d7a6071729"
+            ]
+        ]
+    },
+    {
+        "id": "39caa4d7a6071729",
+        "type": "debug",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "797c291142b9c0f6",
+        "type": "mqtt in",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "topic": "pm1",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "a3dd0a04cb711b26",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 360,
+        "wires": [
+            [
+                "b44fbe91178fea35",
+                "64c23467a1ca8143"
+            ]
+        ]
+    },
+    {
+        "id": "d710425b7e2eca6d",
+        "type": "mqtt in",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "topic": "pm10",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "a3dd0a04cb711b26",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 440,
+        "wires": [
+            [
+                "b44fbe91178fea35",
+                "bd823e116331bd31"
+            ]
+        ]
+    },
+    {
+        "id": "2e534895a66576c1",
+        "type": "mqtt in",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "topic": "pm2_5",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "a3dd0a04cb711b26",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 280,
+        "wires": [
+            [
+                "b44fbe91178fea35",
+                "249d64fa579670ce"
+            ]
+        ]
+    },
+    {
+        "id": "469354ec3c676fc3",
+        "type": "mysql",
+        "z": "bacebb494bd7195b",
+        "mydb": "7dfd3904234c9051",
+        "name": "",
+        "x": 820,
+        "y": 1160,
+        "wires": [
+            [
+                "2a83e0494723c6be"
+            ]
+        ]
+    },
+    {
+        "id": "3d19af06de633dfe",
+        "type": "mqtt in",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "topic": "acetone",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "a3dd0a04cb711b26",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 520,
+        "wires": [
+            [
+                "b44fbe91178fea35",
+                "2d0d6c738aa77923"
+            ]
+        ]
+    },
+    {
+        "id": "2e075c08bea97d2c",
+        "type": "mqtt in",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "topic": "toluene",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "a3dd0a04cb711b26",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 600,
+        "wires": [
+            [
+                "b44fbe91178fea35",
+                "365f406f7c793981"
+            ]
+        ]
+    },
+    {
+        "id": "8fb7291212d8e8b9",
+        "type": "mqtt in",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "topic": "co",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "a3dd0a04cb711b26",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 680,
+        "wires": [
+            [
+                "b44fbe91178fea35",
+                "84f496007e2782cb"
+            ]
+        ]
+    },
+    {
+        "id": "47993950d09aadf9",
+        "type": "mqtt in",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "topic": "co2",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "a3dd0a04cb711b26",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 760,
+        "wires": [
+            [
+                "b44fbe91178fea35",
+                "06f725e086bdca59"
+            ]
+        ]
+    },
+    {
+        "id": "11cfcb641708733a",
+        "type": "mqtt in",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "topic": "nh4",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "a3dd0a04cb711b26",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 840,
+        "wires": [
+            [
+                "b44fbe91178fea35",
+                "830a4b5def5ee634"
+            ]
+        ]
+    },
+    {
+        "id": "f230cafe0a378372",
+        "type": "mqtt in",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "topic": "alcohol",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "a3dd0a04cb711b26",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 920,
+        "wires": [
+            [
+                "b44fbe91178fea35",
+                "42debcf66301926d"
+            ]
+        ]
+    },
+    {
+        "id": "2a83e0494723c6be",
+        "type": "debug",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1030,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "9a123cd75894676c",
+        "type": "telegram sender",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "bot": "6483200c1d4994b2",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1310,
+        "y": 420,
+        "wires": [
+            [
+                "21d69a0e246d3f89"
+            ]
+        ]
+    },
+    {
+        "id": "ad97eb5c3c5ebe0e",
+        "type": "function",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "func": "msg.payload=Number(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 200,
+        "wires": [
+            [
+                "2e7e21b1760c49f7"
+            ]
+        ]
+    },
+    {
+        "id": "8e7d008399ccfbf3",
+        "type": "function",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "func": "msg.payload=Number(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 120,
+        "wires": [
+            [
+                "184b5fe8effcdac6"
+            ]
+        ]
+    },
+    {
+        "id": "42debcf66301926d",
+        "type": "function",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "func": "msg.payload=Number(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 920,
+        "wires": [
+            [
+                "034d09df824bba32"
+            ]
+        ]
+    },
+    {
+        "id": "830a4b5def5ee634",
+        "type": "function",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "func": "msg.payload=Number(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 840,
+        "wires": [
+            [
+                "81a97682e696e7ba"
+            ]
+        ]
+    },
+    {
+        "id": "06f725e086bdca59",
+        "type": "function",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "func": "msg.payload=Number(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 760,
+        "wires": [
+            [
+                "6d154b0c349ef5a8"
+            ]
+        ]
+    },
+    {
+        "id": "365f406f7c793981",
+        "type": "function",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "func": "msg.payload=Number(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 600,
+        "wires": [
+            [
+                "6f7d313557339aee"
+            ]
+        ]
+    },
+    {
+        "id": "2d0d6c738aa77923",
+        "type": "function",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "func": "msg.payload=Number(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 520,
+        "wires": [
+            [
+                "f83759d0b6a77c5b"
+            ]
+        ]
+    },
+    {
+        "id": "bd823e116331bd31",
+        "type": "function",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "func": "msg.payload=Number(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 440,
+        "wires": [
+            [
+                "81fa9fa2ff98a1ef"
+            ]
+        ]
+    },
+    {
+        "id": "64c23467a1ca8143",
+        "type": "function",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "func": "msg.payload=Number(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 360,
+        "wires": [
+            [
+                "165340d541efe551"
+            ]
+        ]
+    },
+    {
+        "id": "249d64fa579670ce",
+        "type": "function",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "func": "msg.payload=Number(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 280,
+        "wires": [
+            [
+                "5376374b4ab9c2ed"
+            ]
+        ]
+    },
+    {
+        "id": "84f496007e2782cb",
+        "type": "function",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "func": "msg.payload=Number(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 680,
+        "wires": [
+            [
+                "b281e5a28f640695"
+            ]
+        ]
+    },
+    {
+        "id": "184b5fe8effcdac6",
+        "type": "switch",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "30",
+                "vt": "num"
+            },
+            {
+                "t": "lt",
+                "v": "18",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 610,
+        "y": 120,
+        "wires": [
+            [
+                "f1b8f286a78c276a"
+            ],
+            [
+                "283e15fdf8a7b419"
+            ]
+        ]
+    },
+    {
+        "id": "034d09df824bba32",
+        "type": "switch",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 920,
+        "wires": [
+            [
+                "36debb4f19cfc72e"
+            ]
+        ]
+    },
+    {
+        "id": "6d154b0c349ef5a8",
+        "type": "switch",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 760,
+        "wires": [
+            [
+                "6a8ba768847d8b75"
+            ]
+        ]
+    },
+    {
+        "id": "b281e5a28f640695",
+        "type": "switch",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 680,
+        "wires": [
+            [
+                "2e1c555c914734f6"
+            ]
+        ]
+    },
+    {
+        "id": "6f7d313557339aee",
+        "type": "switch",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "100",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 600,
+        "wires": [
+            [
+                "b2cfe8dd4196eebb"
+            ]
+        ]
+    },
+    {
+        "id": "f83759d0b6a77c5b",
+        "type": "switch",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "100",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 520,
+        "wires": [
+            [
+                "8fa9e88fdb7f2613"
+            ]
+        ]
+    },
+    {
+        "id": "81fa9fa2ff98a1ef",
+        "type": "switch",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "10",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 440,
+        "wires": [
+            [
+                "af7ac23b88e2ad40"
+            ]
+        ]
+    },
+    {
+        "id": "165340d541efe551",
+        "type": "switch",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "10",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 360,
+        "wires": [
+            [
+                "506b6167818cfcf3"
+            ]
+        ]
+    },
+    {
+        "id": "5376374b4ab9c2ed",
+        "type": "switch",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "10",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 280,
+        "wires": [
+            [
+                "120f1c1398566ab5"
+            ]
+        ]
+    },
+    {
+        "id": "2e7e21b1760c49f7",
+        "type": "switch",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "100",
+                "vt": "num"
+            },
+            {
+                "t": "lte",
+                "v": "50",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 610,
+        "y": 200,
+        "wires": [
+            [
+                "264c38fc8c488d79"
+            ],
+            [
+                "2c81f6327db3de14"
+            ]
+        ]
+    },
+    {
+        "id": "81a97682e696e7ba",
+        "type": "switch",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 610,
+        "y": 840,
+        "wires": [
+            [
+                "ca901159d20611f2"
+            ]
+        ]
+    },
+    {
+        "id": "f1b8f286a78c276a",
+        "type": "change",
+        "z": "bacebb494bd7195b",
+        "name": ">30",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "High Temperature",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 80,
+        "wires": [
+            [
+                "bfe058cf50b0d836"
+            ]
+        ]
+    },
+    {
+        "id": "283e15fdf8a7b419",
+        "type": "change",
+        "z": "bacebb494bd7195b",
+        "name": "<20",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Low Temperature",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 140,
+        "wires": [
+            [
+                "bfe058cf50b0d836"
+            ]
+        ]
+    },
+    {
+        "id": "264c38fc8c488d79",
+        "type": "change",
+        "z": "bacebb494bd7195b",
+        "name": ">100",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Too humid",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 180,
+        "wires": [
+            [
+                "bfe058cf50b0d836"
+            ]
+        ]
+    },
+    {
+        "id": "2c81f6327db3de14",
+        "type": "change",
+        "z": "bacebb494bd7195b",
+        "name": "<50",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Too Dry",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 220,
+        "wires": [
+            [
+                "bfe058cf50b0d836"
+            ]
+        ]
+    },
+    {
+        "id": "120f1c1398566ab5",
+        "type": "change",
+        "z": "bacebb494bd7195b",
+        "name": ">35",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "PM 2.5 too high",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 280,
+        "wires": [
+            [
+                "bfe058cf50b0d836"
+            ]
+        ]
+    },
+    {
+        "id": "506b6167818cfcf3",
+        "type": "change",
+        "z": "bacebb494bd7195b",
+        "name": ">10",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "PM 1 High",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 360,
+        "wires": [
+            [
+                "bfe058cf50b0d836"
+            ]
+        ]
+    },
+    {
+        "id": "af7ac23b88e2ad40",
+        "type": "change",
+        "z": "bacebb494bd7195b",
+        "name": ">150",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "PM 1 High",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 440,
+        "wires": [
+            [
+                "bfe058cf50b0d836"
+            ]
+        ]
+    },
+    {
+        "id": "6a8ba768847d8b75",
+        "type": "change",
+        "z": "bacebb494bd7195b",
+        "name": ">400",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "CO2 High Detected!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 760,
+        "wires": [
+            [
+                "bfe058cf50b0d836"
+            ]
+        ]
+    },
+    {
+        "id": "2e1c555c914734f6",
+        "type": "change",
+        "z": "bacebb494bd7195b",
+        "name": ">10",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "CO High Detected !",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 680,
+        "wires": [
+            [
+                "bfe058cf50b0d836"
+            ]
+        ]
+    },
+    {
+        "id": "b2cfe8dd4196eebb",
+        "type": "change",
+        "z": "bacebb494bd7195b",
+        "name": ">200",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Toluene High Detected",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 600,
+        "wires": [
+            [
+                "bfe058cf50b0d836"
+            ]
+        ]
+    },
+    {
+        "id": "36debb4f19cfc72e",
+        "type": "change",
+        "z": "bacebb494bd7195b",
+        "name": ">400",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Alcohol High Detected!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 920,
+        "wires": [
+            [
+                "bfe058cf50b0d836"
+            ]
+        ]
+    },
+    {
+        "id": "ca901159d20611f2",
+        "type": "change",
+        "z": "bacebb494bd7195b",
+        "name": ">35",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "NH4 High Detected!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 840,
+        "wires": [
+            [
+                "bfe058cf50b0d836"
+            ]
+        ]
+    },
+    {
+        "id": "8fa9e88fdb7f2613",
+        "type": "change",
+        "z": "bacebb494bd7195b",
+        "name": ">250",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Acetone High Detected!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 520,
+        "wires": [
+            [
+                "bfe058cf50b0d836"
+            ]
+        ]
+    },
+    {
+        "id": "bfe058cf50b0d836",
+        "type": "function",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "func": "var content = msg.payload\nmsg.payload = {\"type\":\"message\",\n    \"chatId\": 1032467220,\n    \"content\": content}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 420,
+        "wires": [
+            [
+                "9a123cd75894676c",
+                "b1b6ea99bf2e1aca"
+            ]
+        ]
+    },
+    {
+        "id": "21d69a0e246d3f89",
+        "type": "debug",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1530,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "eb84b6281751f59b",
+        "type": "mqtt out",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "topic": "Buzzer",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "a3dd0a04cb711b26",
+        "x": 1520,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "febd9e115b64549b",
+        "type": "debug",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1530,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "b1b6ea99bf2e1aca",
+        "type": "trigger",
+        "z": "bacebb494bd7195b",
+        "name": "",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "num",
+        "op2type": "num",
+        "duration": "2000",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1380,
+        "y": 240,
+        "wires": [
+            [
+                "eb84b6281751f59b"
+            ]
+        ]
+    }
+]
